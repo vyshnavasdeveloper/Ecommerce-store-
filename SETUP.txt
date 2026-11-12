@@ -1,0 +1,41 @@
+ANUGRAHA CONNECTED WEBSITE
+
+Files: index.html, style.css, script.js, products.js, admin.html, admin.css, admin.js, store1.jpg, store2.jpg, store3.jpg.
+
+IMPORTANT: Keep all files in the SAME folder. (v6: product photos are now built into products.js, so they show even if the images/ folder is missing.)
+
+Your original 17 products are preserved. The first admin load seeds the shared product list with those products. Product changes made in admin appear in the customer page when both are served from the same website origin/browser.
+
+Image upload: In admin > Products > Choose image file. Images are resized/compressed automatically. For best results use JPG/PNG/WebP images under 5 MB.
+
+NOTE: localStorage sync is only same browser + same origin. It does not sync to other customers' devices. For public live syncing across devices, connect Supabase and secure the admin login before launch.
+
+
+PRODUCT IMAGE UPDATE
+The images/ folder contains the ten supplied product photos and is required by both pages.
+Keep the images/ folder beside index.html, admin.html, products.js and the other website files.
+The bundled product photos are refreshed in the admin catalogue when admin.html is opened.
+
+
+UPDATE (v2)
+- All 17 products now use image files in the images/ folder (no more inline base64), so the store and admin load faster and never run out of browser storage.
+- Storage key upgraded to anugraha_products_v2: old test/stale catalogues in a browser are discarded, so all 17 products show with photos.
+- If a saved product has no image, the store uses the bundled photo for that product automatically.
+- Keep the images/ folder beside index.html.
+
+
+UPDATE (v4) - Admin has a "Live view" tab showing the customer site (phone/tablet/desktop) that updates on every save.
+
+UPDATE (v3) - Admin <-> Customer site connected
+- Add/edit/delete a product in admin.html and it appears on index.html straight away (open both on the same browser, same folder/website).
+- New categories typed in admin now automatically get their own filter button on the customer site.
+- Category box in admin suggests existing categories to avoid typos.
+- Customer page refreshes its products when you switch back to its tab.
+- Still browser-only (localStorage). For all customers' phones, Supabase is needed later.
+
+
+UPDATE (v5) - Orders instead of WhatsApp
+- "Order on WhatsApp" and the floating WhatsApp button are removed from the customer site.
+- Cart > Place order > customer enters Name, Phone, Address > Confirm order. A confirmation screen shows the order ID.
+- Admin > "Live orders" (replaces Live view): shows order ID, date & time, name, phone, address, items and total. Buttons: Mark delivered, Call, Delete. New orders show a red badge and a popup alert.
+- Orders are stored in localStorage (key anugraha_orders_v1) - same browser/origin only. For orders from customers' own phones to reach the admin, a backend (e.g. Supabase) is required.

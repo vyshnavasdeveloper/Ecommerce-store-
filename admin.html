@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f8f5">
+<title>ANUGRAHA | Admin</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><b>A</b><span>ANUGRAHA<small>STORE ADMIN</small></span></div>
+    <button class="nav active" data-page="dashboard">▦ Overview</button>
+    <button class="nav" data-page="products">▣ Products</button>
+    <button class="nav" data-page="inventory">▤ Inventory</button>
+    <button class="nav" data-page="offers">％ Offers</button>
+    <button class="nav" data-page="orders">🛒 Live orders <span class="nav-badge" id="navBadge" hidden>0</span></button>
+    <div class="side-bottom">ANUGRAHA STORES<br>Admin Panel · 2026</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="menuBtn" class="menu">☰</button>
+      <div><small>ANUGRAHA /</small> <b id="crumb">Overview</b></div>
+      <span class="admin-tag">ADMIN</span>
+    </header>
+
+    <div class="content">
+
+      <!-- OVERVIEW -->
+      <section class="page active" id="dashboard">
+        <div class="heading">
+          <div><small>STORE MANAGEMENT</small><h1>Overview</h1>
+          <p>Manage your store at a glance.</p></div>
+          <button class="btn" onclick="openAdd()">+ Add product</button>
+        </div>
+
+        <div class="stats">
+          <article><small>Total products</small><h2 id="total">0</h2></article>
+          <article><small>Low stock</small><h2 id="low">0</h2></article>
+          <article><small>Out of stock</small><h2 id="out">0</h2></article>
+          <article><small>Active offers</small><h2 id="offersCount">0</h2></article>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3>Stock alerts</h3>
+          <button class="link" onclick="go('inventory')">View all →</button></div>
+          <div id="alerts"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3>Recent products</h3>
+          <button class="link" onclick="go('products')">Manage →</button></div>
+          <div id="recent"></div>
+        </div>
+      </section>
+
+      <!-- PRODUCTS -->
+      <section class="page" id="products">
+        <div class="heading">
+          <div><small>CATALOGUE</small><h1>Products</h1>
+          <p>Add and manage store products. Saved products appear instantly on the customer site (index.html).</p></div>
+          <button class="btn" onclick="openAdd()">+ Add</button>
+        </div>
+
+        <div class="panel" id="formPanel">
+          <h3 id="formTitle">Add product</h3>
+          <form id="productForm">
+            <input type="hidden" id="editId">
+            <label>Product name *</label>
+            <input id="name" placeholder="Fresh Tomato" required>
+
+            <label>Category *</label>
+            <input id="category" list="categoryList" placeholder="Pick or type a new category" required autocomplete="off">
+            <datalist id="categoryList"></datalist>
+
+            <label>Product image</label>
+            <input id="image" type="url" placeholder="Optional image URL (or choose a file below)">
+            <label class="upload-label">Choose image file</label>
+            <input id="imageFile" type="file" accept="image/*">
+            <div id="imagePreview" class="image-preview"></div>
+
+            <div class="panel-head variant-title">
+              <h3>Size, price & stock</h3>
+              <button type="button" class="link" id="addVariant">+ Add size</button>
+            </div>
+            <div id="variants"></div>
+
+            <div class="form-buttons">
+              <button type="button" class="btn light" id="cancel">Cancel</button>
+              <button class="btn" type="submit" id="saveBtn">Save product</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3>All products</h3>
+          <span id="productCount">0 items</span></div>
+          <input id="search" class="search" placeholder="Search products...">
+          <div id="productList"></div>
+        </div>
+      </section>
+
+      <!-- INVENTORY -->
+      <section class="page" id="inventory">
+        <div class="heading">
+          <div><small>STOCK CONTROL</small><h1>Inventory</h1>
+          <p>Check stock for every product size.</p></div>
+        </div>
+        <div class="stats">
+          <article><small>Available units</small><h2 id="units">0</h2></article>
+          <article><small>Stock alerts</small><h2 id="alertsCount">0</h2></article>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Inventory list</h3></div>
+          <div id="inventoryList"></div>
+        </div>
+      </section>
+
+      <!-- OFFERS -->
+      <section class="page" id="offers">
+        <div class="heading">
+          <div><small>SALES & DISCOUNTS</small><h1>Offers</h1>
+          <p>Manage product discounts.</p></div>
+        </div>
+        <div class="panel">
+          <h3>Product offers</h3>
+          <p class="muted">Set an offer price for any product size in the Products section. Turn offers off by clearing its offer price.</p>
+          <div id="offerList"></div>
+        </div>
+      </section>
+
+
+      <!-- LIVE ORDERS -->
+      <section class="page" id="orders">
+        <div class="heading">
+          <div><small>CUSTOMER ORDERS</small><h1>Live orders</h1>
+          <p>New orders from the customer site appear here automatically. <span class="live-dot">● LIVE</span></p></div>
+        </div>
+        <div class="stats">
+          <article><small>New orders</small><h2 id="ordNew">0</h2></article>
+          <article><small>Delivered</small><h2 id="ordDone">0</h2></article>
+          <article><small>Total orders</small><h2 id="ordTotal">0</h2></article>
+          <article><small>Sales (delivered)</small><h2 id="ordSales">₹0</h2></article>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Orders</h3>
+            <div class="ord-filter">
+              <button class="chip-btn active" data-of="all">All</button>
+              <button class="chip-btn" data-of="New">New</button>
+              <button class="chip-btn" data-of="Delivered">Delivered</button>
+            </div>
+          </div>
+          <input id="orderSearch" class="search" placeholder="Search by name, phone or order ID...">
+          <div id="orderList"></div>
+        </div>
+      </section>
+
+    </div>
+    <footer>© 2026 ANUGRAHA Stores · Admin</footer>
+  </main>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="products.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
